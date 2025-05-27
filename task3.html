@@ -1,0 +1,148 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS Tasks - Responsive + Quiz + API</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      padding: 40px 20px;
+    }
+
+    .wrapper {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #2c3e50;
+    }
+
+    .card {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.01);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      color: #34495e;
+    }
+
+    p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+
+    button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px 3px;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1e8449;
+    }
+
+    #result, #joke {
+      font-weight: bold;
+      margin-top: 15px;
+      color: #2c3e50;
+    }
+
+    @media (max-width: 600px) {
+      .title {
+        font-size: 1.5rem;
+      }
+      button {
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <h1 class="title">JavaScript Tasks Demo</h1>
+
+    <!-- Card 1: Responsive Design -->
+    <div class="card">
+      <h2>1. Responsive Design</h2>
+      <p>This page is fully responsive using CSS media queries. Resize the screen to see changes in layout, button sizes, and text scaling.</p>
+    </div>
+
+    <!-- Card 2: Interactive Quiz -->
+    <div class="card">
+      <h2>2. Quiz: Capital of France</h2>
+      <p>Select the correct answer:</p>
+      <button onclick="checkAnswer('Paris')">Paris</button>
+      <button onclick="checkAnswer('Madrid')">Madrid</button>
+      <button onclick="checkAnswer('Berlin')">Berlin</button>
+      <p id="result"></p>
+    </div>
+
+    <!-- Card 3: Fetch API -->
+    <div class="card">
+      <h2>3. Fetch a Random Joke</h2>
+      <p>Click the button below to fetch a joke from a public API:</p>
+      <button onclick="getJoke()">Get a Joke</button>
+      <p id="joke"></p>
+    </div>
+  </div>
+
+  <script>
+    function checkAnswer(answer) {
+      const correct = 'Paris';
+      const result = document.getElementById('result');
+      if (answer === correct) {
+        result.textContent = 'Correct!';
+        result.style.color = 'green';
+      } else {
+        result.textContent = 'Oops! Try again.';
+        result.style.color = 'red';
+      }
+    }
+
+    async function getJoke() {
+      const jokeElement = document.getElementById('joke');
+      try {
+        const res = await fetch('https://official-joke-api.appspot.com/random_joke');
+        const data = await res.json();
+        jokeElement.textContent = `${data.setup} — ${data.punchline}`;
+      } catch (error) {
+        jokeElement.textContent = 'Failed to load joke. Try again.';
+      }
+    }
+  </script>
+
+</body>
+</html>
