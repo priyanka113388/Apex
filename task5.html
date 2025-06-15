@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bachelor Recipe Hub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    header {
+      background-color: #28a745;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background-color: #e9ecef;
+      padding: 10px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .section {
+      display: none;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    .active {
+      display: block;
+    }
+    .hero {
+      text-align: center;
+    }
+    .hero-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .recipe-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .recipe-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .recipe-list img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    button {
+      background-color: #28a745;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    footer {
+      background-color: #28a745;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bachelor Recipe Hub</h1>
+    <nav>
+      <a onclick="showSection('home')">Home</a>
+      <a onclick="showSection('recipes')">Recipes List</a>
+      <a onclick="showSection('generator')">Generate Curry</a>
+      <a onclick="showSection('wishlist')">Wishlist</a>
+    </nav>
+  </header>
+
+  <!-- Home Section -->
+  <section id="home" class="section active">
+    <div class="hero">
+      <img src="banner.png" class="hero-img" alt="Banner">
+      <h2>Simple & Tasty Recipes for Bachelors</h2>
+      <p>Discover a variety of easy-to-cook meals designed to simplify your kitchen experience. Each recipe is customized with ingredient quantities based on the number of people you're serving. Whether cooking for one or a group, enjoy hassle-free preparation with perfectly portioned meals.</p>
+    </div>
+  </section>
+
+  <!-- Recipes List -->
+  <section id="recipes" class="section recipe-list">
+    <h2>Choose a Recipe to Cook:</h2>
+    <ul>
+      <li><img src="egg bhurji.jpg" alt="Egg Bhurji"><span>Egg Bhurji</span></li>
+      <li><img src="tomato dal.jpg" alt="Tomato Dal"><span>Tomato Dal</span></li>
+      <li><img src="coffee.jpg" alt="Coffee"><span>Cappuccino Coffee</span></li>
+      <li><img src="sambar.jpg" alt="Sambar"><span>Sambar</span></li>
+      <li><img src="potato.jpg" alt="Potato"><span>Potato Fry</span></li>
+      <li><img src="pulihora.jpg" alt="Pulihora"><span>Pulihora (Lemon Rice)</span></li>
+      <li><img src="soyapakoda.jpg" alt="Soya Pakoda"><span>Soya Pakoda</span></li>
+      <li><img src="egg fried rice.jpg" alt="Egg Fried Rice"><span>Egg Fried Rice</span></li>
+      <li><img src="chicken curry.jpg" alt="Chicken Curry"><span>Chicken Curry</span></li>
+      <li><img src="maggie.jpg" alt="Maggie"><span>Maggie</span></li>
+    </ul>
+  </section>
+
+  <!-- Generator -->
+  <section id="generator" class="section">
+    <h2>Generate Your Recipe</h2>
+    <label for="recipeInput">Choose a recipe:</label>
+    <select id="recipeInput">
+      <option value="">--Select a recipe--</option>
+      <option value="egg friedrice">Egg Fried Rice</option>
+      <option value="soya pakoda">Soya Pakoda</option>
+      <option value="chicken curry">Chicken Curry</option>
+      <option value="maggie">Maggie</option>
+    </select>
+    <button onclick="getRecipe()">Generate Recipe</button>
+    <div id="results"></div>
+  </section>
+
+  <!-- Wishlist -->
+  <section id="wishlist" class="section">
+    <h2>My Wishlist</h2>
+    <ul id="wishlistItems"></ul>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Bachelor Recipe Hub</p>
+  </footer>
+
+  <script>
+    const recipes = {
+      "egg friedrice": {
+        ingredients: {
+          "Cooked rice": "2 cups",
+          "Eggs": "2",
+          "Onion": "1 small, chopped",
+          "Green peas": "½ cup (optional)",
+          "Carrot": "1 small, chopped (optional)",
+          "Garlic": "2 cloves, minced",
+          "Soy sauce": "1 tbsp",
+          "Oil": "2 tbsp",
+          "Salt": "to taste",
+          "Pepper": "to taste",
+          "Spring onions or coriander": "for garnish (optional)"
+        },
+        steps: `1. Heat oil and sauté onion and garlic.\n2. Add veggies, cook 2–3 mins.\n3. Scramble eggs in same pan.\n4. Add rice, soy sauce, salt, pepper. Mix and heat.\n5. Garnish and serve.`
+      },
+      "soya pakoda": {
+        ingredients: {
+          "Soya chunks": "100g (soaked, chopped)",
+          "Gram flour (besan)": "100g",
+          "Rice flour": "2 tbsp",
+          "Green chili": "1, chopped",
+          "Ginger": "1 tsp, grated",
+          "Turmeric": "0.5 tsp",
+          "Red chili powder": "1 tsp",
+          "Salt": "to taste",
+          "Water": "as needed",
+          "Oil": "for deep frying"
+        },
+        steps: `1. Mix all ingredients with water to make thick batter.\n2. Deep fry spoonfuls until golden.\n3. Serve with chutney.`
+      },
+      "chicken curry": {
+        ingredients: {
+          "Chicken": "300g",
+          "Onion": "1, chopped",
+          "Tomato": "1, chopped",
+          "Garlic": "3 cloves, minced",
+          "Ginger": "1-inch, grated",
+          "Oil": "2 tbsp",
+          "Spices": "Salt, chili, coriander, turmeric, garam masala",
+          "Water": "200ml"
+        },
+        steps: `1. Sauté onion, garlic, ginger.\n2. Add tomato and spices.\n3. Brown chicken.\n4. Add water, simmer 25 mins.\n5. Garnish and serve.`
+      },
+      "maggie": {
+        ingredients: {
+          "Maggi noodles": "1 packet",
+          "Water": "1.5 cups",
+          "Tastemaker": "1 packet",
+          "Veggies (optional)": "½ cup",
+          "Oil/Butter": "1 tsp"
+        },
+        steps: `1. Sauté veggies.\n2. Add water, bring to boil.\n3. Add noodles and tastemaker.\n4. Cook until done.\n5. Serve hot.`
+      }
+    };
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function getRecipe() {
+      const name = document.getElementById("recipeInput").value.toLowerCase().trim();
+      const resultDiv = document.getElementById("results");
+      resultDiv.innerHTML = "";
+
+      if (recipes[name]) {
+        let output = `<h3>${name.toUpperCase()}</h3><ul>`;
+        for (let item in recipes[name].ingredients) {
+          output += `<li><strong>${item}:</strong> ${recipes[name].ingredients[item]}</li>`;
+        }
+        output += `</ul><p><strong>Steps:</strong><br>${recipes[name].steps.replace(/\n/g, "<br>")}</p>`;
+        output += `<button onclick="addToWishlist('${name}')">Add to My Wishlist</button>`;
+        resultDiv.innerHTML = output;
+      } else {
+        resultDiv.innerHTML = "<p>Please select a valid recipe.</p>";
+      }
+    }
+
+    function addToWishlist(recipe) {
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      if (!wishlist.includes(recipe)) {
+        wishlist.push(recipe);
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+        alert(`${recipe} added to wishlist!`);
+      } else {
+        alert(`${recipe} is already in your wishlist.`);
+      }
+      renderWishlist();
+    }
+
+    function removeFromWishlist(recipe) {
+      let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      wishlist = wishlist.filter(item => item !== recipe);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      renderWishlist();
+    }
+
+    function renderWishlist() {
+      const listContainer = document.getElementById("wishlistItems");
+      if (!listContainer) return;
+      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      if (wishlist.length === 0) {
+        listContainer.innerHTML = "<li>No items in wishlist</li>";
+        return;
+      }
+      listContainer.innerHTML = "";
+      wishlist.forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          ${item}
+          <button onclick="removeFromWishlist('${item}')">Remove</button>
+          <button onclick="showSection('generator'); document.getElementById('recipeInput').value='${item}'; getRecipe();">View Recipe</button>
+        `;
+        listContainer.appendChild(li);
+      });
+    }
+
+    window.onload = function () {
+      renderWishlist();
+    };
+  </script>
+</body>
+</html>
+
